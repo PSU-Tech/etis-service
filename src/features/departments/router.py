@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from .schemas import Department
 from .dependencies import DepartmentServiceDep
 
-router = APIRouter(prefix="/faculties", tags=["ЕТИС::Учебные подразделения"])
+router = APIRouter(prefix="/departments", tags=["ЕТИС::Учебные подразделения"])
 
 
 @router.get("/", response_model_by_alias=False, response_model_exclude_none=True)

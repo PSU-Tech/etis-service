@@ -1,4 +1,3 @@
-from .repository import DepartmentRepository
 from ...core.repository.base_repository import BaseRepository
 
 
