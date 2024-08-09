@@ -10,6 +10,11 @@ class GroupName(BaseModel):
     """Короткое название группы"""
 
 
+class PartialFaculty(BaseModel):
+    id: str
+    short_name: str
+
+
 class Group(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
@@ -17,7 +22,7 @@ class Group(BaseModel):
     """Идентификатор группы в ЕТИС"""
     name: GroupName
     """Имя группы в ЕТИС"""
-    faculty: Faculty
+    faculty: PartialFaculty
     """Факультет группы"""
     year: int
     """Год"""
