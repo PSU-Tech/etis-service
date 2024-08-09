@@ -28,7 +28,7 @@ class MongoDBRepository[T: pydantic.BaseModel](BaseRepository):
             self.model(**item) async for item in self.__collection.find()
         ]
 
-    async def search_by_field(self, field_name: str, query: str, filter: Optional[dict] = None) -> list[T]:
+    async def search_by_field(self, field_name: str, query: str, filter: Optional[dict] = None, *, limit: int = 100) -> list[T]:
         if filter is None:
             filter = {}
 
@@ -36,7 +36,7 @@ class MongoDBRepository[T: pydantic.BaseModel](BaseRepository):
             self.model(**item)
             async for item in self.__collection.find(
                 {field_name: {"$regex": f".*{query}.*", "$options": 'i'}, **filter},
-                limit=10,
+                limit=limit,
                 sort=[field_name]
             )
         ]

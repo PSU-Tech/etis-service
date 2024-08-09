@@ -17,5 +17,5 @@ class BaseRepository:
         raise NotImplementedError()
 
     @abstractmethod
-    async def search_by_field(self, field_name: str, query: str, filter: Optional[dict] = None) -> Any:
+    async def search_by_field(self, field_name: str, query: str, filter: Optional[dict] = None, *, limit: int) -> Any:
         raise NotImplementedError()
