@@ -12,3 +12,8 @@ async def search_groups(query: str, faculty_id: str, service: GroupsServiceDep, 
     Поиск группы по её короткому имени
     """
     return await service.search_group(query, faculty_id, limit=limit)
+
+
+@router.get("/{group_id}", response_model_by_alias=False, )
+async def get_group_by_id(group_id: int, service: GroupsServiceDep):
+    return await service.get_group_by_id(str(group_id))
