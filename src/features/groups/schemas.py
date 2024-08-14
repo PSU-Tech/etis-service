@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 
-from src.features.faculties.schemas import Faculty
+from src.features.common.enums import PeriodType
 
 
 class GroupName(BaseModel):
@@ -30,3 +30,4 @@ class Group(BaseModel):
     """Степень образования"""
     speciality: str
     """Специальность. Включает в себя код и полное название"""
+    period_type: PeriodType

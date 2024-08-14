@@ -28,6 +28,10 @@ class MongoDBRepository[T: pydantic.BaseModel](BaseRepository):
             self.model(**item) async for item in self.__collection.find()
         ]
 
+    async def get_one_by_filter(self, filter: dict):
+        item = await self.__collection.find_one(filter)
+        return self.model(**item) if item else None
+
     async def search_by_field(self, field_name: str, query: str, filter: Optional[dict] = None, *, limit: int = 100) -> list[T]:
         if filter is None:
             filter = {}
