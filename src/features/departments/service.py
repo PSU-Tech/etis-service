@@ -12,4 +12,4 @@ class DepartmentService:
         return await self.repository.get_all()
 
     async def search_department(self, query: str):
-        return await self.repository.search(query)
+        return await self.repository.search_by_field("name", query)
