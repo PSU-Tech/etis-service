@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import APIRouter
 
 from .dependencies import PeriodWeekServiceDep
@@ -15,7 +13,4 @@ async def get_period(
     period_type: PeriodType,
     year: int
 ) -> PeriodWeek:
-    d =  await service.get(period_type, year)
-    print(d)
-    return d
-
+    return await service.get(period_type, year)
