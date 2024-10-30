@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter
 
 from .dependencies import TeacherServiceDep
@@ -15,8 +17,8 @@ async def search_teachers(query: str, service: TeacherServiceDep) -> list[Teache
 
 
 @router.get("/{teacher_id}", response_model_by_alias=False, response_model_exclude_none=True)
-async def get_teacher_by_id(teacher_id: int, service: TeacherServiceDep) -> Teacher:
+async def get_teacher_by_id(teacher_id: int, service: TeacherServiceDep) -> Optional[Teacher]:
     """
     Получение преподавателя по идентификатору
     """
-    return await service.get_teacher_by_id(str(teacher_id))
+    return await service.get_teacher_by_id(teacher_id)
