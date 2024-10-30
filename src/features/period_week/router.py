@@ -8,9 +8,5 @@ router = APIRouter(prefix="/periods", tags=["ЕТИС::Периоды обуче
 
 
 @router.get("/")
-async def get_period(
-    service: PeriodWeekServiceDep,
-    period_type: PeriodType,
-    year: int
-) -> PeriodWeek:
+async def get_period(service: PeriodWeekServiceDep, period_type: PeriodType, year: int) -> PeriodWeek:
     return await service.get(period_type, year)

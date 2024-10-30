@@ -19,28 +19,24 @@ class MongoDBRepository[T: pydantic.BaseModel](BaseRepository):
         return self.model(**data)
 
     async def get_list(self, limit: int, skip: int) -> list[T]:
-        return [
-            self.model(**item) async for item in self.__collection.find(limit=limit, skip=skip)
-        ]
+        return [self.model(**item) async for item in self.__collection.find(limit=limit, skip=skip)]
 
     async def get_all(self) -> list[T]:
-        return [
-            self.model(**item) async for item in self.__collection.find()
-        ]
+        return [self.model(**item) async for item in self.__collection.find()]
 
     async def get_one_by_filter(self, filter: dict):
         item = await self.__collection.find_one(filter)
         return self.model(**item) if item else None
 
-    async def search_by_field(self, field_name: str, query: str, filter: Optional[dict] = None, *, limit: int = 100) -> list[T]:
+    async def search_by_field(
+        self, field_name: str, query: str, filter: Optional[dict] = None, *, limit: int = 100
+    ) -> list[T]:
         if filter is None:
             filter = {}
 
         return [
             self.model(**item)
             async for item in self.__collection.find(
-                {field_name: {"$regex": f".*{query}.*", "$options": 'i'}, **filter},
-                limit=limit,
-                sort=[field_name]
+                {field_name: {"$regex": f".*{query}.*", "$options": "i"}, **filter}, limit=limit, sort=[field_name]
             )
         ]

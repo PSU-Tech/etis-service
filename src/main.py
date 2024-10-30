@@ -13,9 +13,3 @@ app = FastAPI(
     version="1.0.0",
 )
 list(map(app.include_router, routers))
-
-
-
-
-
-
