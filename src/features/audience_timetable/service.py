@@ -15,7 +15,7 @@ times = [
 
 
 class AudienceTimetableService:
-    def get_audience_timetable(self, audience_id: int, period: int, week: int):
+    def get_audience_timetable(self, audience_id: int, week: int):
         audience_usage = AudienceUsageRepository.get_audience_usage(audience_id, week)
         timetable = {
             "week_info": {
@@ -32,7 +32,7 @@ class AudienceTimetableService:
             for pair_index in range(8):
                 if day[pair_index]:
                     usage_info = AudienceUsageInfoRepository.get_audience_usage_info(
-                        audience_id, period, week, day_number + 1, pair_index + 1
+                        audience_id, week, day_number + 1, pair_index + 1
                     )
                     type = usage_info.pop("type")
                     day_obj["pairs"].append(

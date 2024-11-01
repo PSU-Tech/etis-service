@@ -21,13 +21,13 @@ class ETISHTTPClient:
         response = self.request("GET", "/rep_chk2.usage_tr", params=params)
         return response.text
 
-    def get_audience_usage_info(self, audience_id: int, period: int, week: int, day: int, pair: int):
+    def get_audience_usage_info(self, audience_id: int, week: int, day: int, pair: int):
         params = {
             "P_TY_ID": datetime.datetime.today().year,
             "P_WEEK": week,
             "P_DAY": day,
             "P_PAIR": pair,
-            "P_TERM": period,
+            "P_TERM": "",
             "P_ROO_ID": audience_id,
         }
         response = self.request("GET", "/rep_chk2.usage_tr_info", params=params)
