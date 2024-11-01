@@ -16,4 +16,3 @@ class Audience(BaseModel):
     """Размерность аудитории"""
     note: Optional[str] = Field(default=None)
     """Примечание к аудитории"""
-

@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from .schemas import Audience
 from .dependencies import AudienceServiceDep
 
-router = APIRouter(prefix="/audience", tags=["ЕТИС::Учебные подразделения"])
+router = APIRouter(prefix="/audience", tags=["ЕТИС::Аудитории"])
 
 
 @router.get("/{audience_id}", response_model_by_alias=False, response_model_exclude_none=True)
@@ -25,7 +25,9 @@ async def get_audience_by_number(audience_number: str, service: AudienceServiceD
 
 
 @router.get("/search", response_model_by_alias=False, response_model_exclude_none=True)
-async def search_audience_by_number(query: str, service: AudienceServiceDep, building: Optional[str] = None) -> list[Audience]:
+async def search_audience_by_number(
+    query: str, service: AudienceServiceDep, building: Optional[str] = None
+) -> list[Audience]:
     """
     Поиск аудитории по её номеру и указанному корпусу
     """
