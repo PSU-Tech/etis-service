@@ -48,5 +48,5 @@ class AudienceTimetableService:
             timetable["days"].append(day_obj)
 
         return Timetable(
-            **timetable, audience=PartialAudience(id=audience_id, number=audience.number, building=audience.building)
+            **timetable, audience=PartialAudience(id=audience_id, number=audience.number, string=audience.number, building=audience.building)
         )

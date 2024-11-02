@@ -57,6 +57,7 @@ class Day(BaseModel):
 
 class PartialAudience(BaseModel):
     id: int
+    string: str
     number: str
     building: str
 
