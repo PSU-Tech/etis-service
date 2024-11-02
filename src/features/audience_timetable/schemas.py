@@ -1,6 +1,7 @@
 from enum import Enum
+from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class LessonTypes(str, Enum):
@@ -46,7 +47,7 @@ class Pair(BaseModel):
     position: int
     time: str
     lessons: list[Lesson]
-    event: Event
+    event: Optional[Event] = Field(default=None)
 
 
 class Day(BaseModel):
