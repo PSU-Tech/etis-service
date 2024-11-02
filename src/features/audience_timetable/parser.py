@@ -36,13 +36,15 @@ def parse_audience_usage(html: str):
             continue
         days[-1].append(False)
 
-    table_trs = soup.find("table").find_all('tr', recursive=False)
+    table_trs = soup.find("table").find_all("tr", recursive=False)
     week_date_tag: Tag = table_trs[0].find_all("td")[-1]
     _, week = week_date_tag.find("a").text.split()
     dates_raw = week_date_tag.contents[1].text.strip()
     date_start, date_end = dates_raw[1 : len(dates_raw) - 1].split(" - ")
 
-    days_date = list(map(lambda td: DATE_REGEX.findall(td.text.strip())[0], table_trs[1].find_all("td", align="center")[:6]))  # Сломанный HTML, в котором не закрыт тег tr
+    days_date = list(
+        map(lambda td: DATE_REGEX.findall(td.text.strip())[0], table_trs[1].find_all("td", align="center")[:6])
+    )  # Сломанный HTML, в котором не закрыт тег tr
 
     return {"week": int(week), "dates": {"start": date_start, "end": date_end}, "days": days, "days_date": days_date}
 

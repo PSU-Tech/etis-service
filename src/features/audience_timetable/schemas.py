@@ -5,9 +5,9 @@ from pydantic import BaseModel, Field
 
 
 class LessonTypes(str, Enum):
-    LECTURE = 'LECTURE'
-    PRACTICE = 'PRACTICE'
-    LABORATORY = 'LABORATORY'
+    LECTURE = "LECTURE"
+    PRACTICE = "PRACTICE"
+    LABORATORY = "LABORATORY"
 
 
 class WeekDates(BaseModel):

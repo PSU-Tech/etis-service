@@ -13,5 +13,5 @@ routers = [
     groups_router.router,
     period_week_router.router,
     audience_router.router,
-    audience_timetable_router.router
+    audience_timetable_router.router,
 ]
