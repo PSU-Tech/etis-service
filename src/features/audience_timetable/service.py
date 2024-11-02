@@ -1,6 +1,7 @@
+from src.features.audience.schemas import Audience
 from src.features.audience_timetable.audience_usage_info_repository import AudienceUsageInfoRepository
 from src.features.audience_timetable.audience_usage_repository import AudienceUsageRepository
-from src.features.audience_timetable.schemas import Timetable
+from src.features.audience_timetable.schemas import Timetable, PartialAudience
 
 times = [
     "8:00",
@@ -15,7 +16,7 @@ times = [
 
 
 class AudienceTimetableService:
-    def get_audience_timetable(self, audience_id: int, week: int):
+    def get_audience_timetable(self, audience_id: int, week: int, audience: Audience):
         audience_usage = AudienceUsageRepository.get_audience_usage(audience_id, week)
         days_date = audience_usage.pop("days_date")
         timetable = {
@@ -46,4 +47,6 @@ class AudienceTimetableService:
                     )
             timetable["days"].append(day_obj)
 
-        return Timetable(**timetable)
+        return Timetable(
+            **timetable, audience=PartialAudience(id=audience_id, number=audience.number, building=audience.building)
+        )

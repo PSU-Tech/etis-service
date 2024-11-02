@@ -55,6 +55,13 @@ class Day(BaseModel):
     pairs: list[Pair]
 
 
+class PartialAudience(BaseModel):
+    id: int
+    number: str
+    building: str
+
+
 class Timetable(BaseModel):
     week_info: WeekInfo
     days: list[Day]
+    audience: PartialAudience
