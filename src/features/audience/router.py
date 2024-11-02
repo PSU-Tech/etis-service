@@ -8,14 +8,6 @@ from .dependencies import AudienceServiceDep
 router = APIRouter(prefix="/audience", tags=["ЕТИС::Аудитории"])
 
 
-@router.get("/{audience_id}", response_model_by_alias=False, response_model_exclude_none=True)
-async def get_audience_by_id(audience_id: int, service: AudienceServiceDep) -> Optional[Audience]:
-    """
-    Получение аудитории по её идентификатору
-    """
-    return await service.get_audience_by_id(audience_id)
-
-
 @router.get("/", response_model_by_alias=False, response_model_exclude_none=True)
 async def get_audience_by_number(audience_number: str, service: AudienceServiceDep) -> Optional[Audience]:
     """
@@ -32,3 +24,11 @@ async def search_audience_by_number(
     Поиск аудитории по её номеру и указанному корпусу
     """
     return await service.search_audience(query, building)
+
+
+@router.get("/{audience_id}", response_model_by_alias=False, response_model_exclude_none=True)
+async def get_audience_by_id(audience_id: int, service: AudienceServiceDep) -> Optional[Audience]:
+    """
+    Получение аудитории по её идентификатору
+    """
+    return await service.get_audience_by_id(audience_id)
