@@ -17,6 +17,7 @@ times = [
 class AudienceTimetableService:
     def get_audience_timetable(self, audience_id: int, week: int):
         audience_usage = AudienceUsageRepository.get_audience_usage(audience_id, week)
+        days_date = audience_usage.pop("days_date")
         timetable = {
             "week_info": {
                 "first": 1,
@@ -28,7 +29,7 @@ class AudienceTimetableService:
         }
 
         for day_number, day in enumerate(audience_usage["days"]):
-            day_obj = {"pairs": []}
+            day_obj = {"pairs": [], "date": days_date[day_number]}
             for pair_index in range(8):
                 if day[pair_index]:
                     usage_info = AudienceUsageInfoRepository.get_audience_usage_info(

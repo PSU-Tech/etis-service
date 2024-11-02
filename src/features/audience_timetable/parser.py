@@ -1,4 +1,15 @@
+import re
+
 from bs4 import BeautifulSoup, Tag
+
+from .schemas import LessonTypes
+
+DATE_REGEX = re.compile(r".*\((\d{2}.\d{2}.\d{2})\)")
+lesson_types = {
+    "лек": LessonTypes.LECTURE,
+    "практ": LessonTypes.PRACTICE,
+    "лаб": LessonTypes.LABORATORY,
+}
 
 
 def parse_audience_usage(html: str):
@@ -25,12 +36,15 @@ def parse_audience_usage(html: str):
             continue
         days[-1].append(False)
 
-    week_date_tag: Tag = soup.find("table").find("tr").find_all("td")[-1]
+    table_trs = soup.find("table").find_all('tr', recursive=False)
+    week_date_tag: Tag = table_trs[0].find_all("td")[-1]
     _, week = week_date_tag.find("a").text.split()
     dates_raw = week_date_tag.contents[1].text.strip()
     date_start, date_end = dates_raw[1 : len(dates_raw) - 1].split(" - ")
 
-    return {"week": int(week), "dates": {"start": date_start, "end": date_end}, "days": days}
+    days_date = list(map(lambda td: DATE_REGEX.findall(td.text.strip())[0], table_trs[1].find_all("td", align="center")[:6]))  # Сломанный HTML, в котором не закрыт тег tr
+
+    return {"week": int(week), "dates": {"start": date_start, "end": date_end}, "days": days, "days_date": days_date}
 
 
 def _get_event_data(soup: BeautifulSoup):
@@ -76,7 +90,7 @@ def parse_audience_usage_info(html: str):
 
     return {
         "type": "PAIR",
-        "subject": {"discipline": discipline, "type": lesson_type},
+        "subject": {"discipline": discipline, "type": lesson_types[lesson_type]},
         "teacher": {
             "name": teacher,
         },
