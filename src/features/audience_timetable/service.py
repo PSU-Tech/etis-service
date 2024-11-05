@@ -13,6 +13,9 @@ times = [
     "18:40",
     "20:25",
 ]
+MAX_PAIRS_IN_DAY = len(times)
+FIRST_POSSIBLE_WEEK = 1
+LAST_POSSIBLE_WEEK = 53 # Последняя неделя августа
 
 
 class AudienceTimetableService:
@@ -21,8 +24,8 @@ class AudienceTimetableService:
         days_date = audience_usage.pop("days_date")
         timetable = {
             "week_info": {
-                "first": 1,
-                "last": 53,
+                "first": FIRST_POSSIBLE_WEEK,
+                "last": LAST_POSSIBLE_WEEK,
                 "selected": audience_usage["week"],
                 "dates": audience_usage["dates"],
             },
@@ -31,7 +34,7 @@ class AudienceTimetableService:
 
         for day_number, day in enumerate(audience_usage["days"]):
             day_obj = {"pairs": [], "date": days_date[day_number]}
-            for pair_index in range(8):
+            for pair_index in range(MAX_PAIRS_IN_DAY):
                 if day[pair_index]:
                     usage_info = AudienceUsageInfoRepository.get_audience_usage_info(
                         audience_id, week, day_number + 1, pair_index + 1
