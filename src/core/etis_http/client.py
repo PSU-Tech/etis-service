@@ -3,6 +3,8 @@ from typing import Any, Optional
 
 import requests
 
+from src.core.utils.date import get_current_education_year
+
 ORIGIN_URL = "https://etis.psu.ru/pls/education"
 PROXY_URL = "https://etisproxy0.damego.ru/etis/pls/education"
 
@@ -23,7 +25,7 @@ class ETISHTTPClient:
 
     def get_audience_usage_info(self, audience_id: int, week: int, day: int, pair: int):
         params = {
-            "P_TY_ID": datetime.datetime.today().year,
+            "P_TY_ID": get_current_education_year(),
             "P_WEEK": week,
             "P_DAY": day,
             "P_PAIR": pair,

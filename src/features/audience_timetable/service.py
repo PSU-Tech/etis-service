@@ -39,15 +39,19 @@ class AudienceTimetableService:
                     usage_info = AudienceUsageInfoRepository.get_audience_usage_info(
                         audience_id, week, day_number + 1, pair_index + 1
                     )
-                    type = usage_info.pop("type")
-                    day_obj["pairs"].append(
-                        {
-                            "position": pair_index + 1,
-                            "time": times[pair_index],
-                            "lessons": [usage_info] if type == "PAIR" else [],
-                            "event": usage_info if type == "EVENT" else None,
-                        }
-                    )
+                    type = usage_info.pop("type") if usage_info else None
+                    pair = {
+                        "position": pair_index + 1,
+                        "time": times[pair_index],
+                    }
+                    if type is None:
+                        pair["lessons"] = []
+                    if type == "PAIR":
+                        pair["lessons"] = [usage_info]
+                    if type == "EVENT":
+                        pair["event"] = usage_info
+
+                    day_obj["pairs"].append(pair)
             timetable["days"].append(day_obj)
 
         return Timetable(

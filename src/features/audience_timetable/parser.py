@@ -51,7 +51,10 @@ def parse_audience_usage(html: str):
 
 def _get_event_data(soup: BeautifulSoup):
     table = soup.find_all("table")[-1]
-    title_row, data_row = table.find_all("tr")
+    rows = table.find_all("tr")
+    if not rows:
+        return
+    title_row, data_row = rows
 
     is_event = title_row.find_all("th")[1].text == "Мероприятие"
     if is_event:
